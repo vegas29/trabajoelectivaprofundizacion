@@ -181,7 +181,7 @@ export default class Factura extends React.Component {
                     class="btn btn-primary w-100"
                     onClick={this.closeModal.bind(this)}
                   >
-                    Close
+                    Cerrar
                   </button>
                 </div>
               </div>
