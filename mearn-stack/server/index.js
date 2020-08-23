@@ -24,7 +24,7 @@ app.use("/productos",routerProductos)
 app.use("/vendedor",routerVendedor)
 
 
-mongoose.connect("mongodb://localhost:27017/electiva", {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect("mongodb://localhost:27017/electiva", {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex:true});
 mongoose.connection.on('error', () => {
   console.error(`unable to connect to database`);
 });

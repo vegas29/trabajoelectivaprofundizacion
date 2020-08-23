@@ -11,11 +11,24 @@ controllerFactura.mostrarFactura=async function(req,res){
 controllerFactura.crearFactura=async function(req,res){
     req.body.vendedor = req.vendedor._id
     //res.send(req.body)
+    const session =await ProductosSchema.startSession()
+    session.startTransaction();
+    try{
+        req.body.productos.forEach(async (product) => {
+            let producto=await ProductosSchema.findOne({_id:product.idProducto})
+            producto.cantidad=(parseInt(producto.cantidad)-parseInt(product.cantidad)).toString()
+            await ProductosSchema.updateOne({_id:producto._id},{$set:{cantidad:producto.cantidad}})
+        });
+        await session.commitTransaction();
+    }catch(e){
+        await session.abortTransaction();
+    }
+
     const factura= new FacturasSchema(req.body)
     await factura.save()
     res.send({
         title:"ok",
-        message:"Se ha registrado satisfactoriamente la factura"
+        message:"se ha registrado sastifactoriamente la factura"
     })
 }
 
